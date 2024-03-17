@@ -1,6 +1,7 @@
+import java.util.ArrayList;
 public class AppMain {
     private static Maze maze = new Maze();
-
+     
     public static void main(String[] args) {
         // Write a recursive method to solve the maze. It should make use of
         //  the instance member variable maze. It knows about the maze and
@@ -10,10 +11,54 @@ public class AppMain {
         // TODO: ...
 
         // Print out your solution, maze can do that for you (it's already written)
-        Location[] replaceWithYourSln = new Location[0];
-        maze.printMazeAndPath(replaceWithYourSln);
+        ArrayList<Location> finalPath = new ArrayList<Location>();
+        if (SolveMaze(maze, maze.getStartLoc(), finalPath)) {
+            Location[] mazePath =  new Location[finalPath.size()];
+            int index = 0;
+            for (Location location : finalPath) {
+                mazePath[index] = location;
+                index++;
+            }
+            maze.printMazeAndPath(mazePath);
+        }
     }
+    private static boolean SolveMaze(Maze maze, Location current, ArrayList<Location> solution)
+    {
+        if (maze.isExit(current)) {
+            solution.add(current);
+            return true;
+        }
+        if (hasVisitedNode(current)) {
+            return false;
+        }
+        markVisited(current);
+        if ((maze.canGoLeft(current))) {
+            if (SolveMaze(maze, (new Location(current)).incLeft(), solution)) {
+                solution.add(current);
+                    return true;
+            }
+        }
+        if ((maze.canGoRight(current))) {
+            if (SolveMaze(maze, (new Location(current)).incRight(), solution)) {
+                solution.add(current);
+                    return true;
+            }
+        }
+        if ((maze.canGoUp(current))) {
+            if (SolveMaze(maze, (new Location(current)).incUp(), solution)) {
+                solution.add(current);
+                    return true;
+            }
+        }
+        if ((maze.canGoDown(current))) {
+            if (SolveMaze(maze, (new Location(current)).incDown(), solution)) {
+                solution.add(current);
+                    return true;
+            }
+        }
 
+        return false;
+    }
 
     // Helper methods for marking locations as visited
     //  You are probably going to want to use: hasVisitedNode & markVisited.
