@@ -12,7 +12,7 @@ public class AppMain {
 
         // Print out your solution, maze can do that for you (it's already written)
         ArrayList<Location> finalPath = new ArrayList<Location>();
-        if (SolveMaze(maze, maze.getStartLoc(), finalPath)) {
+        if (solveMaze(maze, maze.getStartLoc(), finalPath)) {
             Location[] mazePath =  new Location[finalPath.size()];
             int index = 0;
             for (Location location : finalPath) {
@@ -22,7 +22,9 @@ public class AppMain {
             maze.printMazeAndPath(mazePath);
         }
     }
-    private static boolean SolveMaze(Maze maze, Location current, ArrayList<Location> solution)
+
+    //
+    private static boolean solveMaze(Maze maze, Location current, ArrayList<Location> solution)
     {
         if (maze.isExit(current)) {
             solution.add(current);
@@ -33,27 +35,27 @@ public class AppMain {
         }
         markVisited(current);
         if ((maze.canGoLeft(current))) {
-            if (SolveMaze(maze, (new Location(current)).incLeft(), solution)) {
+            if (solveMaze(maze, (new Location(current)).incLeft(), solution)) {
                 solution.add(current);
-                    return true;
+                return true;
             }
         }
         if ((maze.canGoRight(current))) {
-            if (SolveMaze(maze, (new Location(current)).incRight(), solution)) {
+            if (solveMaze(maze, (new Location(current)).incRight(), solution)) {
                 solution.add(current);
-                    return true;
+                return true;
             }
         }
         if ((maze.canGoUp(current))) {
-            if (SolveMaze(maze, (new Location(current)).incUp(), solution)) {
+            if (solveMaze(maze, (new Location(current)).incUp(), solution)) {
                 solution.add(current);
-                    return true;
+                return true;
             }
         }
         if ((maze.canGoDown(current))) {
-            if (SolveMaze(maze, (new Location(current)).incDown(), solution)) {
+            if (solveMaze(maze, (new Location(current)).incDown(), solution)) {
                 solution.add(current);
-                    return true;
+                return true;
             }
         }
 
